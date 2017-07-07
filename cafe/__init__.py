@@ -1,9 +1,9 @@
 import os
 
 from flask import Flask, jsonify
-from models.user import User
 
 from cafe.database.database import db
+from cafe.models.user import User
 
 app = Flask(__name__)
 

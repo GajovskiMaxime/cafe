@@ -3,3 +3,4 @@ Flask-Script==2.0.5
 Flask-SQLAlchemy==2.2
 SQLAlchemy==1.1.11
 psycopg2==2.7.1
+flask-testing==0.6.2
