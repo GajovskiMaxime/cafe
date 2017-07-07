@@ -1,0 +1,3 @@
+CREATE DATABASE cafe_prod;
+CREATE DATABASE cafe_dev;
+CREATE DATABASE cafe_test;

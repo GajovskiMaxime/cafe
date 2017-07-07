@@ -3,7 +3,7 @@ version: '3'
 services:
 
   cafe_service:
-    container_name: cafe_container
+    container_name: cafe_service
     build: .
     volumes:
       - '.:/usr/src/cafe'
@@ -11,3 +11,17 @@ services:
       - 5001:5000
     environment:
       - APP_SETTINGS=cafe.config.DevelopmentConfig
+      - DATABASE_URL=postgres://postgres:postgres@cafe_database:5432/cafe_dev
+      - DATABASE_TEST_URL=postgres://postgres:postgres@cafe_database:5432/cafe_test
+
+
+  cafe_database:
+    container_name: cafe_database
+    build: ./cafe/database
+    ports:
+        - 5435:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: exit 0
