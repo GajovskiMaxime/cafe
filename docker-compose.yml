@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+
+  cafe_service:
+    container_name: cafe_container
+    build: .
+    volumes:
+      - '.:/usr/src/cafe'
+    ports:
+      - 5001:5000
+    environment:
+      - APP_SETTINGS=cafe.config.DevelopmentConfig
