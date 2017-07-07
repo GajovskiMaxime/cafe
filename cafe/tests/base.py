@@ -1,7 +1,8 @@
 from unittest import TestCase
 
-from cafe import app
-from cafe.database.database import db
+from cafe import db, create_app
+
+app = create_app()
 
 
 class BaseTestCase(TestCase):

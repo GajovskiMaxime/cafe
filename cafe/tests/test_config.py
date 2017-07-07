@@ -3,7 +3,9 @@ from unittest import TestCase
 
 from flask import current_app
 
-from cafe import app
+from cafe import create_app
+
+app = create_app()
 
 
 class TestDevelopmentConfig(TestCase):

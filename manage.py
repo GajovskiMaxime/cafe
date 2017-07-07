@@ -3,9 +3,9 @@ import unittest
 from flask import current_app
 from flask_script import Manager
 
-from cafe import app
-from cafe.database.database import db
+from cafe import create_app, db
 
+app = create_app()
 manager = Manager(app)
 
 

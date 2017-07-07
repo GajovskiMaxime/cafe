@@ -1,6 +1,6 @@
 import datetime
 
-from cafe.database.database import db
+from cafe import db
 
 
 class User(db.Model):

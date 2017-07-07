@@ -1,19 +1,23 @@
 import os
 
-from flask import Flask, jsonify
+from flask import Flask
 
-from cafe.database.database import db
-from cafe.models.user import User
+from flask_sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
+from cafe.api.user_controller import user_blueprint
 
-app_settings = os.getenv('APP_SETTINGS')
-app.config.from_object(app_settings)
+db = SQLAlchemy()
 
-db.init_app(app)
 
-@app.route('/ping', methods=['GET'])
-def ping_pong():
-    return jsonify({
-        'status': 'success',
-        'message': 'pong!'})
+def create_app():
+
+    app = Flask(__name__)
+
+    app_settings = os.getenv('APP_SETTINGS')
+    app.config.from_object(app_settings)
+
+    db.init_app(app)
+
+    app.register_blueprint(user_blueprint)
+
+    return app
