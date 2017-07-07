@@ -1,0 +1,9 @@
+##VirtualEnv
+venv/
+
+##Python
+__pycache__/
+*.py[cod]
+
+##Idea
+.idea/
