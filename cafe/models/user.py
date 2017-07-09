@@ -1,6 +1,6 @@
 import datetime
 
-from cafe import db
+from cafe.database.database import db
 
 
 class User(db.Model):
@@ -19,3 +19,12 @@ class User(db.Model):
         self.username = username
         self.email = email
         self.created_at = datetime.datetime.now()
+
+    @property
+    def dict_repr(self):
+        return {
+            self._fields_labels[0].lower(): self.id,
+            self._fields_labels[1].lower(): self.username,
+            self._fields_labels[2].lower(): self.email,
+            self._fields_labels[4].lower(): self.created_at,
+        }

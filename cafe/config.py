@@ -1,13 +1,18 @@
 import os
 
+import logging
+
 
 class BaseConfig:
     """Base configuration"""
     DEBUG = False
     TESTING = False
-    SECRET_KEY = 'my_precious'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    # Logger config
+    LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    LOGGING_LOCATION = 'cafe.log'
+    LOGGING_LEVEL = logging.DEBUG
 
 class DevelopmentConfig(BaseConfig):
     """Development configuration"""
