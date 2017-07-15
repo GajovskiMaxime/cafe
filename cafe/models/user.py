@@ -1,5 +1,7 @@
 import datetime
 
+from sqlalchemy import Integer, String, Boolean, DateTime
+
 from cafe.database.database import db
 
 
@@ -7,13 +9,46 @@ class User(db.Model):
 
     __tablename__ = "USER"
 
-    _fields_labels = ["ID", "USERNAME", "EMAIL", "IS_ACTIVE", "CREATED_AT"]
+    _columns_properties = {
+        'id': {
+            'name': 'ID',
+            'type_': Integer,
+            'primary_key': True,
+            'autoincrement': True
+        },
+        'username': {
+            'name': 'USERNAME',
+            'type_': String(128),
+            'nullable': False
+        },
+        'email': {
+            'name': 'EMAIL',
+            'type_': String(128),
+            'nullable': False
+        },
+        'is_active': {
+            'name': 'IS_ACTIVE',
+            'type_': Boolean,
+            'default': False,
+            'nullable': False
+        },
+        'created_at': {
+            'name': 'CREATED_AT',
+            'type_': DateTime,
+            'nullable': False
+        }
+    }
 
-    id = db.Column(_fields_labels[0], db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(_fields_labels[1], db.String(128), nullable=False)
-    email = db.Column(_fields_labels[2], db.String(128), nullable=False)
-    active = db.Column(_fields_labels[3], db.Boolean(), default=False, nullable=False)
-    created_at = db.Column(_fields_labels[4], db.DateTime, nullable=False)
+    mandatory_fields_for_post = (
+        _columns_properties['username']['name'],
+        _columns_properties['email']['name']
+    )
+
+    id = db.Column(**_columns_properties['id'])
+    username = db.Column(**_columns_properties['username'])
+    email = db.Column(**_columns_properties['email'])
+    is_active = db.Column(**_columns_properties['is_active'])
+    created_at = db.Column(**_columns_properties['created_at'])
 
     def __init__(self, username, email):
         self.username = username
@@ -21,10 +56,10 @@ class User(db.Model):
         self.created_at = datetime.datetime.now()
 
     @property
-    def dict_repr(self):
+    def serialize(self):
         return {
-            self._fields_labels[0].lower(): self.id,
-            self._fields_labels[1].lower(): self.username,
-            self._fields_labels[2].lower(): self.email,
-            self._fields_labels[4].lower(): self.created_at,
+            self._columns_properties['id']['name'].lower(): self.id,
+            self._columns_properties['username']['name'].lower(): self.username,
+            self._columns_properties['email']['name'].lower(): self.email,
+            self._columns_properties['created_at']['name'].lower(): self.created_at,
         }
