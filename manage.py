@@ -16,6 +16,7 @@ def recreate_database():
     db.create_all()
     db.session.commit()
 
+
 @manager.command
 def test():
     """Runs the tests without code coverage."""
