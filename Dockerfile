@@ -12,4 +12,6 @@ RUN pip install -r requirements.txt
 
 ADD . /usr/src/$APP_NAME
 
+RUN echo 'alias pmr="python manage.py recreate_database"' >> /root/.bashrc
+
 CMD python manage.py runserver -h 0.0.0.0
