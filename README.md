@@ -48,6 +48,11 @@ Next you have to re/create the database:
 ```
 docker-compose run cafe_service python manage.py recreate_database
 ```
+> You can  go inside of the container and call the alias 'pmn'
+>```
+> alias pmr="python manage.py recreate_database"
+> ``` 
+
 \
 And then you can run the server:
 ```
@@ -68,7 +73,12 @@ $ ip addr show eth0 | grep -Po 'inet \K[\d.]+'
 ```
 > It can be useful if you want to connect to the database (cafe_database).
 
-
+Both of containers are now configured with static_ip.
+```
+cafe_database ---> 172.20.128.3
+cafe_service  ---> 172.20.128.2
+```
+> 
 ## Running the tests
 
 You can run tests with the following command : 
