@@ -1,65 +1,38 @@
-import datetime
-
-from sqlalchemy import Integer, String, Boolean, DateTime
-
 from cafe.database.database import db
+from cafe.models_properties.user_properties import UserProperties
+from cafe.utils.models_utils import column_name
 
 
 class User(db.Model):
 
     __tablename__ = "USER"
 
-    _columns_properties = {
-        'id': {
-            'name': 'ID',
-            'type_': Integer,
-            'primary_key': True,
-            'autoincrement': True
-        },
-        'username': {
-            'name': 'USERNAME',
-            'type_': String(128),
-            'nullable': False
-        },
-        'email': {
-            'name': 'EMAIL',
-            'type_': String(128),
-            'nullable': False
-        },
-        'is_active': {
-            'name': 'IS_ACTIVE',
-            'type_': Boolean,
-            'default': False,
-            'nullable': False
-        },
-        'created_at': {
-            'name': 'CREATED_AT',
-            'type_': DateTime,
-            'nullable': False
-        }
-    }
+    properties = UserProperties()
 
-    mandatory_fields_for_post = (
-        _columns_properties['username']['name'],
-        _columns_properties['email']['name']
-    )
+    id = db.Column(**properties.get('id'))
+    username = db.Column(**properties.get('username'))
+    email = db.Column(**properties.get('email'))
+    password = db.Column(**properties.get('password'))
+    longitude = db.Column(**properties.get('longitude'))
+    latitude = db.Column(**properties.get('latitude'))
+    created_at = db.Column(**properties.get('created_at'))
 
-    id = db.Column(**_columns_properties['id'])
-    username = db.Column(**_columns_properties['username'])
-    email = db.Column(**_columns_properties['email'])
-    is_active = db.Column(**_columns_properties['is_active'])
-    created_at = db.Column(**_columns_properties['created_at'])
-
-    def __init__(self, username, email):
+    def __init__(self, username, email, password,
+                 longitude=None, latitude=None):
         self.username = username
         self.email = email
-        self.created_at = datetime.datetime.now()
+        self.password = password
+        self.longitude = longitude
+        self.latitude = latitude
 
     @property
     def serialize(self):
         return {
-            self._columns_properties['id']['name'].lower(): self.id,
-            self._columns_properties['username']['name'].lower(): self.username,
-            self._columns_properties['email']['name'].lower(): self.email,
-            self._columns_properties['created_at']['name'].lower(): self.created_at,
+            column_name(User, 'id'):        self.id,
+            column_name(User, 'username'):  self.username,
+            column_name(User, 'email'):     self.email,
+            column_name(User, 'password'):  self.password,
+            column_name(User, 'longitude'): self.longitude,
+            column_name(User, 'latitude'):  self.latitude,
+            column_name(User, 'created_at'):self.created_at,
         }
