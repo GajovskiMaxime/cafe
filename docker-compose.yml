@@ -13,7 +13,9 @@ services:
       - APP_SETTINGS=cafe.config.DevelopmentConfig
       - DATABASE_URL=postgres://postgres:postgres@cafe_database:5432/cafe_dev
       - DATABASE_TEST_URL=postgres://postgres:postgres@cafe_database:5432/cafe_test
-
+    networks:
+      static-network:
+        ipv4_address: 172.20.128.2
 
   cafe_database:
     container_name: cafe_database
@@ -25,3 +27,11 @@ services:
       - POSTGRES_PASSWORD=postgres
     healthcheck:
       test: exit 0
+    networks:
+          static-network:
+            ipv4_address: 172.20.128.3
+networks:
+  static-network:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
